@@ -1,0 +1,1 @@
+export {ValidateIdModal} from './ValidateIdModal';

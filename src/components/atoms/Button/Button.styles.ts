@@ -1,11 +1,12 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-  buttonsWrapper: {
-    flex: 1,
-    justifyContent: 'center',
-  },
   button: {
-    marginVertical: 8,
+    padding: 10,
+    borderRadius: 10,
+  },
+  text: {
+    fontSize: 20,
+    textAlign: 'center',
   },
 });

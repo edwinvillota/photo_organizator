@@ -1,11 +1,9 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-  buttonsWrapper: {
+  basicLayout: {
     flex: 1,
-    justifyContent: 'center',
-  },
-  button: {
-    marginVertical: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
   },
 });
