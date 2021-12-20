@@ -24,7 +24,6 @@ const useRequestPermissions = (): UseRequestPermissionsReturn => {
       const granted = await PermissionsAndroid.requestMultiple(
         RequiredPermissions,
       );
-      console.log(granted);
       let arePermissionsValid = true;
       RequiredPermissions.forEach(permission => {
         if (permission in granted) {
@@ -60,7 +59,6 @@ const useRequestPermissions = (): UseRequestPermissionsReturn => {
     setIsLoading(true);
     const checkPermissions = async () => {
       const arePermissionsGranted = await arePermissionsNeededGranted();
-      console.log({arePermissionsGranted});
       if (!arePermissionsGranted) {
         await requestAllPermissions();
       } else {

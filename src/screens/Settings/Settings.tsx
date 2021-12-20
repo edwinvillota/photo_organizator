@@ -1,11 +1,15 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {BasicLayout} from '../../layouts';
+import {SettingsEditor} from '../../components/organisms';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Settings: React.FC = () => {
   return (
-    <View>
-      <Text>Settings</Text>
-    </View>
+    <ScrollView>
+      <BasicLayout>
+        <SettingsEditor />
+      </BasicLayout>
+    </ScrollView>
   );
 };
 
