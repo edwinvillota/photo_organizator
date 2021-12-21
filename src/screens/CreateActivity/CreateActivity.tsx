@@ -4,20 +4,23 @@ import {Props} from './CreateActivity.types';
 import {ActivityInput, Button} from '../../components/atoms';
 import {ValidateIdModal} from '../../components/molecules';
 import {styles} from './CreateActivity.styles';
+import {useSettings} from '../../context/SettingsProvider';
+import {isValidActivityId} from '../../utils';
 
 const CreateActivity: React.FC<Props> = ({navigation}) => {
+  const {settings} = useSettings();
   const [activityId, setActivityId] = useState<string>('');
   const [isValidId, setIsValidId] = useState<boolean>(false);
   const [isOpenValidateModal, setIsOpenValidateModal] =
     useState<boolean>(false);
 
   useEffect(() => {
-    if (activityId?.length === 7) {
+    if (isValidActivityId({activityId, validations: settings.validations})) {
       setIsValidId(true);
     } else {
       setIsValidId(false);
     }
-  }, [activityId]);
+  }, [activityId, settings.validations]);
 
   return (
     <BasicLayout>
@@ -25,6 +28,7 @@ const CreateActivity: React.FC<Props> = ({navigation}) => {
         label="Número de actividad"
         onChangeText={id => setActivityId(id)}
         value={activityId}
+        maxLength={settings.validations.activityId.maxLength}
       />
       <Button
         type="Success"
@@ -37,7 +41,7 @@ const CreateActivity: React.FC<Props> = ({navigation}) => {
         idToValidate={activityId}
         visible={isOpenValidateModal}
         onCloseModal={() => setIsOpenValidateModal(false)}
-        onContinue={id => navigation.navigate('AddPhotos')}
+        onContinue={id => navigation.navigate('AddPhotos', {activityId: id})}
         animationType="slide"
         presentationStyle="overFullScreen"
         transparent

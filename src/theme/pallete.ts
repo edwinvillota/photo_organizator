@@ -13,13 +13,13 @@ export type PalleteType = {
 };
 
 export const Pallete: PalleteType = {
-  Primary: '#3d54d9',
-  Secondary: '#f2e205',
-  Success: '#59d961',
-  Error: '#f2059f',
-  Dark: '#222940',
+  Primary: '#00adb5',
+  Secondary: '#ff5722',
+  Success: '#45eba5',
+  Error: '#ff2e63',
+  Dark: '#222831',
   Black: '#000000',
   White: '#ffffff',
-  Gray: '#cccccc',
-  MidGray: '#666666',
+  Gray: '#eeeeee',
+  MidGray: '#393e46',
 };

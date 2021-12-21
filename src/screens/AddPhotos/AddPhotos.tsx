@@ -1,12 +1,18 @@
 import React from 'react';
-import {Text} from 'react-native';
 import {BasicLayout} from '../../layouts';
 import {Props} from './AddPhotos.types';
+import {CapturePhotoList} from '../../components/organisms';
+import {useSettings} from '../../context/SettingsProvider';
 
 const AddPhotos: React.FC<Props> = () => {
+  const {settings} = useSettings();
+
   return (
     <BasicLayout>
-      <Text>Hello</Text>
+      <CapturePhotoList
+        photographs={settings.photographs}
+        onSave={() => console.log('Save')}
+      />
     </BasicLayout>
   );
 };

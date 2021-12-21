@@ -21,7 +21,7 @@ const CustomButton: React.FC<IButtonProps> = ({
 
   return (
     <TouchableOpacity
-      style={[style, styles.button, backgroundStyle]}
+      style={[styles.button, backgroundStyle, style]}
       disabled={disabled}
       {...props}>
       <Text style={[styles.text, colorStyle]}>{children}</Text>

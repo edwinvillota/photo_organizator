@@ -6,7 +6,7 @@ export const DefaultSettings: Settings = {
   date: '2021-12-17',
   validations: {
     activityId: {
-      regExp: '^d{7}$',
+      regExp: '^[0-9]{7}$',
       minLength: 7,
       maxLength: 7,
     },

@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {Home, Settings, CreateActivity, AddPhotos} from './screens';
-import {useRequestPermissions} from './hooks';
+import {useRequestPermissions, useCreateMainFolder} from './hooks';
 import {ActivityIndicator, Text, View} from 'react-native';
 import {SettingsProvider} from './context/SettingsProvider';
 import 'react-native-gesture-handler';
@@ -11,7 +11,7 @@ import 'react-native-gesture-handler';
 export type ActivitiesStackParamsList = {
   Home: undefined;
   CreateActivity: undefined;
-  AddPhotos: undefined;
+  AddPhotos: {activityId: string};
   ListPhotos: undefined;
 };
 
@@ -32,7 +32,13 @@ const ActivitiesStack: React.FC = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen name="CreateActivity" component={CreateActivity} />
-      <Stack.Screen name="AddPhotos" component={AddPhotos} />
+      <Stack.Screen
+        name="AddPhotos"
+        component={AddPhotos}
+        options={({route}) => ({
+          title: `Actividad - ${route.params.activityId}`,
+        })}
+      />
     </Stack.Navigator>
   );
 };
@@ -41,7 +47,12 @@ const App: React.FC = () => {
   const {appHasRequiredPermissions, isLoading, isError} =
     useRequestPermissions();
 
-  if (isLoading) {
+  const {
+    isLoading: isCreateMainFolderLoading,
+    isError: isErrorCreateMainFolderError,
+  } = useCreateMainFolder();
+
+  if (isLoading || isCreateMainFolderLoading) {
     return (
       <View style={{flex: 1}}>
         <ActivityIndicator />
@@ -49,7 +60,7 @@ const App: React.FC = () => {
     );
   }
 
-  if (isError) {
+  if (isError || isErrorCreateMainFolderError) {
     return (
       <View style={{flex: 1}}>
         <Text>
