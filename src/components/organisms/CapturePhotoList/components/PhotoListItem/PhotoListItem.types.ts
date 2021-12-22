@@ -1,7 +1,7 @@
-import {Photograph} from '../../../../../models';
+import {PhotographState} from '../../../../../models';
 
 export interface IPhotoListItem {
-  photo: Photograph;
-  onCapture: () => void;
-  onPreview: () => void;
+  photo: PhotographState;
+  onCapture: (photo: PhotographState) => void;
+  onPreview: (photo: PhotographState) => void;
 }

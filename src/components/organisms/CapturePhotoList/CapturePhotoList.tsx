@@ -8,6 +8,9 @@ import {styles} from './CapturePhotoList.styles';
 const CapturePhotoList: React.FC<ICapturePhotoList> = ({
   photographs,
   onSave,
+  disabledSaveButton,
+  onCapture,
+  onPreview,
 }) => {
   return (
     <>
@@ -17,12 +20,16 @@ const CapturePhotoList: React.FC<ICapturePhotoList> = ({
         renderItem={({item}) => (
           <PhotoListItem
             photo={item}
-            onCapture={() => console.log('Capturing')}
-            onPreview={() => console.log('Preview')}
+            onCapture={onCapture}
+            onPreview={onPreview}
           />
         )}
       />
-      <Button type="Primary" style={styles.button} onPress={onSave}>
+      <Button
+        type="Primary"
+        style={styles.button}
+        onPress={onSave}
+        disabled={disabledSaveButton}>
         Guardar
       </Button>
     </>

@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
   statusWrapper: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: 'green',
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
@@ -33,5 +32,6 @@ export const styles = StyleSheet.create({
     borderRadius: 0,
     alignItems: 'center',
     justifyContent: 'center',
+    maxWidth: 64,
   },
 });
