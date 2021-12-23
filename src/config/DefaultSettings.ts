@@ -16,7 +16,7 @@ export const DefaultSettings: Settings = {
   },
   photographs: [
     {id: 1, name: 'Predio antes', required: true},
-    {id: 2, name: 'Medidor', required: true},
+    {id: 2, name: 'Medidor', required: false},
     {id: 3, name: 'Lectura activa', required: true},
     {id: 4, name: 'Lectura reactiva', required: true},
     {id: 5, name: 'Sello tapa bornera 1', required: true},

@@ -7,11 +7,12 @@ import {useRequestPermissions, useCreateMainFolder} from './hooks';
 import {ActivityIndicator, Text, View} from 'react-native';
 import {SettingsProvider} from './context/SettingsProvider';
 import 'react-native-gesture-handler';
+import {PhotographState} from './models';
 
 export type ActivitiesStackParamsList = {
   Home: undefined;
   CreateActivity: undefined;
-  AddPhotos: {activityId: string};
+  AddPhotos: {activityId: string; photoStates?: PhotographState[]};
   ListPhotos: undefined;
 };
 

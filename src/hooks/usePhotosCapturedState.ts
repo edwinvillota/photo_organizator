@@ -8,9 +8,19 @@ type UsePhotosCapturedReturn = {
   areValidPhotos: boolean;
 };
 
+type UsePhotoCapturedParams = {
+  preloadedPhotoStates?: PhotographState[];
+};
+
 type ChangePhotoState = (capturedPhoto: Photograph, photoPath: string) => void;
 
-const initializePhotoStates = (settings: Settings): PhotographState[] => {
+const initializePhotoStates = (
+  settings: Settings,
+  preloadedPhotoStates?: PhotographState[],
+): PhotographState[] => {
+  if (preloadedPhotoStates) {
+    return preloadedPhotoStates;
+  }
   const photographs = settings.photographs;
   const photographsWithStatus: PhotographState[] = photographs.map(photo => ({
     ...photo,
@@ -22,11 +32,13 @@ const initializePhotoStates = (settings: Settings): PhotographState[] => {
   return photographsWithStatus;
 };
 
-const usePhotosCapturedState = (): UsePhotosCapturedReturn => {
+const usePhotosCapturedState = ({
+  preloadedPhotoStates,
+}: UsePhotoCapturedParams): UsePhotosCapturedReturn => {
   const {settings} = useSettings();
   const [areValidPhotos, setAreValidPhotos] = useState(false);
   const [photoStates, setPhotoStates] = useState<PhotographState[]>(
-    initializePhotoStates(settings),
+    initializePhotoStates(settings, preloadedPhotoStates),
   );
 
   const changePhotoState = useCallback<ChangePhotoState>(

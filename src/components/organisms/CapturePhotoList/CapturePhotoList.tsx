@@ -16,6 +16,7 @@ const CapturePhotoList: React.FC<ICapturePhotoList> = ({
     <>
       <FlatList
         ListHeaderComponent={<Text type="Title">Listado de fotos</Text>}
+        ListHeaderComponentStyle={styles.header}
         data={photographs}
         renderItem={({item}) => (
           <PhotoListItem

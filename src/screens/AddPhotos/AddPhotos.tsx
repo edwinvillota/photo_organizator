@@ -3,13 +3,14 @@ import {BasicLayout} from '../../layouts';
 import {Props} from './AddPhotos.types';
 import {CapturePhotoList} from '../../components/organisms';
 import {PreviewModal} from '../../components/molecules';
-import {ImagePickerResponse, launchCamera} from 'react-native-image-picker';
+import {ImagePickerResponse} from 'react-native-image-picker';
 import {useCapturePhoto, usePhotosCapturedState} from '../../hooks';
 import {Photograph, PhotographState} from '../../models';
+import {Alert} from 'react-native';
 
-const AddPhotos: React.FC<Props> = ({route}) => {
+const AddPhotos: React.FC<Props> = ({route, navigation}) => {
   const {photoStates, changePhotoState, areValidPhotos} =
-    usePhotosCapturedState();
+    usePhotosCapturedState({preloadedPhotoStates: route.params.photoStates});
   const [photoToPreview, setPhotoToPreview] = useState<PhotographState>();
   const [isOpenPreviewModal, setIsOpenPreviewModal] = useState<boolean>(false);
 
@@ -34,7 +35,21 @@ const AddPhotos: React.FC<Props> = ({route}) => {
     <BasicLayout>
       <CapturePhotoList
         photographs={photoStates}
-        onSave={() => launchCamera({saveToPhotos: true, mediaType: 'photo'})}
+        onSave={() =>
+          Alert.alert(
+            'Exito',
+            'La actividad se guardó correctamente',
+            [
+              {
+                text: 'OK',
+                onPress: () => {
+                  navigation.navigate('Home');
+                },
+              },
+            ],
+            {cancelable: false},
+          )
+        }
         disabledSaveButton={!areValidPhotos}
         onCapture={photo => capturePhoto(photo, route.params.activityId)}
         onPreview={photo => {

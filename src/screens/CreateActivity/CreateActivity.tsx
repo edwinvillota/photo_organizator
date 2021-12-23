@@ -6,6 +6,8 @@ import {ValidateIdModal} from '../../components/molecules';
 import {styles} from './CreateActivity.styles';
 import {useSettings} from '../../context/SettingsProvider';
 import {isValidActivityId} from '../../utils';
+import {useRestoreActivityState} from '../../hooks';
+import {PhotographState} from '../../models';
 
 const CreateActivity: React.FC<Props> = ({navigation}) => {
   const {settings} = useSettings();
@@ -13,6 +15,20 @@ const CreateActivity: React.FC<Props> = ({navigation}) => {
   const [isValidId, setIsValidId] = useState<boolean>(false);
   const [isOpenValidateModal, setIsOpenValidateModal] =
     useState<boolean>(false);
+
+  const onCreateActivity = (id: string) => {
+    navigation.navigate('AddPhotos', {activityId: id});
+  };
+
+  const onEditActivity = (id: string, photoStates: PhotographState[]) => {
+    navigation.navigate('AddPhotos', {activityId: id, photoStates});
+  };
+
+  const {createOrEditActivity} = useRestoreActivityState({
+    activityId,
+    onCreateActivity,
+    onEditActivity,
+  });
 
   useEffect(() => {
     if (isValidActivityId({activityId, validations: settings.validations})) {
@@ -41,7 +57,7 @@ const CreateActivity: React.FC<Props> = ({navigation}) => {
         idToValidate={activityId}
         visible={isOpenValidateModal}
         onCloseModal={() => setIsOpenValidateModal(false)}
-        onContinue={id => navigation.navigate('AddPhotos', {activityId: id})}
+        onContinue={() => createOrEditActivity()}
         animationType="slide"
         presentationStyle="overFullScreen"
         transparent
