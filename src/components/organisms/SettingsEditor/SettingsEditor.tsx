@@ -1,8 +1,9 @@
 import React from 'react';
-import {ActivityIndicator, View} from 'react-native';
+import {View} from 'react-native';
 import {useSettings} from '../../../context/SettingsProvider';
 import {StorageViewer, ValidationsViewer, PhotoList} from './components';
-import {Text, KeyValue} from '../../atoms';
+import {Text, KeyValue, LoadingView} from '../../atoms';
+import {styles} from './SettingsEditor.styles';
 
 const SettingsEditor: React.FC = () => {
   const {settings, isLoading, isError} = useSettings();
@@ -12,11 +13,11 @@ const SettingsEditor: React.FC = () => {
   }
 
   if (isLoading) {
-    return <ActivityIndicator />;
+    return <LoadingView />;
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text type="Title">Preferencias</Text>
       <Text type="Subtitle">Información de preferencias</Text>
       <KeyValue prop="Nombre:" value={settings.name} />

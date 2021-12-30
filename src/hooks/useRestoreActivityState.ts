@@ -24,7 +24,7 @@ const useRestoreActivityState = ({
   const createOrEditActivity = useCallback(async () => {
     const date = format(new Date(), 'dd-MM-yyyy');
     let isNewActivity = true;
-    const dateFolder = `${RNFS.ExternalStorageDirectoryPath}/${settings.storage.mainFolderName}/${date}`;
+    const dateFolder = `${RNFS.ExternalStorageDirectoryPath}/${settings.storage.mainFolderName}/${date}/${activityId}`;
     try {
       const filesInDir = await RNFS.readdir(dateFolder);
 
@@ -46,7 +46,6 @@ const useRestoreActivityState = ({
       }
     } catch (e) {
       onCreateActivity(activityId);
-      console.log({e, dateFolder});
     }
   }, [
     activityId,

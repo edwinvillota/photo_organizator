@@ -1,6 +1,9 @@
-export {default as useRequestPermissions} from './useRequestPermissions';
-export {default as useDownloadSettings} from './useDownloadSettings';
-export {default as useCreateMainFolder} from './useCreateMainFolder';
+export {default as useActivitiesRecord} from './useActivitiesRecord';
 export {default as useCapturePhoto} from './useCapturePhoto';
+export {default as useCreateMainFolder} from './useCreateMainFolder';
+export {default as useDownloadSettings} from './useDownloadSettings';
 export {default as usePhotosCapturedState} from './usePhotosCapturedState';
+export {default as useRequestPermissions} from './useRequestPermissions';
 export {default as useRestoreActivityState} from './useRestoreActivityState';
+export {default as useSettingsStorage} from './useSettingsStorage';
+export {default as useCreateActivityFolder} from './useCreateActivityFolder';

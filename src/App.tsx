@@ -2,18 +2,25 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {Home, Settings, CreateActivity, AddPhotos} from './screens';
+import {
+  Home,
+  Settings,
+  CreateActivity,
+  AddPhotos,
+  ActivitiesRecord,
+} from './screens';
 import {useRequestPermissions, useCreateMainFolder} from './hooks';
-import {ActivityIndicator, Text, View} from 'react-native';
 import {SettingsProvider} from './context/SettingsProvider';
 import 'react-native-gesture-handler';
 import {PhotographState} from './models';
+import {LoadingView, ErrorView} from './components/atoms';
 
 export type ActivitiesStackParamsList = {
   Home: undefined;
   CreateActivity: undefined;
   AddPhotos: {activityId: string; photoStates?: PhotographState[]};
-  ListPhotos: undefined;
+  ActivitiesRecord: undefined;
+  Error: {error: unknown};
 };
 
 export type MainDrawerStackParamList = {
@@ -32,13 +39,22 @@ const ActivitiesStack: React.FC = () => {
         component={Home}
         options={{headerShown: false}}
       />
-      <Stack.Screen name="CreateActivity" component={CreateActivity} />
+      <Stack.Screen
+        name="CreateActivity"
+        component={CreateActivity}
+        options={{title: 'Nueva actividad'}}
+      />
       <Stack.Screen
         name="AddPhotos"
         component={AddPhotos}
         options={({route}) => ({
           title: `Actividad - ${route.params.activityId}`,
         })}
+      />
+      <Stack.Screen
+        name="ActivitiesRecord"
+        component={ActivitiesRecord}
+        options={{title: 'Actividades ejecutadas'}}
       />
     </Stack.Navigator>
   );
@@ -54,31 +70,21 @@ const App: React.FC = () => {
   } = useCreateMainFolder();
 
   if (isLoading || isCreateMainFolderLoading) {
-    return (
-      <View style={{flex: 1}}>
-        <ActivityIndicator />
-      </View>
-    );
+    return <LoadingView />;
   }
 
   if (isError || isErrorCreateMainFolderError) {
     return (
-      <View style={{flex: 1}}>
-        <Text>
-          Ocurrio un error al solicitar los permisos necesarios para el
-          funcionamiento de la aplicación
-        </Text>
-      </View>
+      <ErrorView
+        error="Ocurrio un error al solicitar los permisos necesarios para el
+      funcionamiento de la aplicación"
+      />
     );
   }
 
   if (!appHasRequiredPermissions) {
     return (
-      <View style={{flex: 1}}>
-        <Text>
-          No tienes los permisos necesarios para ejecutar esta aplicación
-        </Text>
-      </View>
+      <ErrorView error="No tienes los permisos necesarios para ejecutar esta aplicación" />
     );
   }
 
@@ -86,8 +92,16 @@ const App: React.FC = () => {
     <NavigationContainer>
       <SettingsProvider>
         <Drawer.Navigator initialRouteName="Activities">
-          <Drawer.Screen name="Activities" component={ActivitiesStack} />
-          <Drawer.Screen name="Settings" component={Settings} />
+          <Drawer.Screen
+            name="Activities"
+            component={ActivitiesStack}
+            options={{title: 'Actividades'}}
+          />
+          <Drawer.Screen
+            name="Settings"
+            component={Settings}
+            options={{title: 'Preferencias'}}
+          />
         </Drawer.Navigator>
       </SettingsProvider>
     </NavigationContainer>

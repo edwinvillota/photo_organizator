@@ -4,7 +4,11 @@ import {Props} from './AddPhotos.types';
 import {CapturePhotoList} from '../../components/organisms';
 import {PreviewModal} from '../../components/molecules';
 import {ImagePickerResponse} from 'react-native-image-picker';
-import {useCapturePhoto, usePhotosCapturedState} from '../../hooks';
+import {
+  useCapturePhoto,
+  usePhotosCapturedState,
+  useActivitiesRecord,
+} from '../../hooks';
 import {Photograph, PhotographState} from '../../models';
 import {Alert} from 'react-native';
 
@@ -13,6 +17,7 @@ const AddPhotos: React.FC<Props> = ({route, navigation}) => {
     usePhotosCapturedState({preloadedPhotoStates: route.params.photoStates});
   const [photoToPreview, setPhotoToPreview] = useState<PhotographState>();
   const [isOpenPreviewModal, setIsOpenPreviewModal] = useState<boolean>(false);
+  const {addActivity} = useActivitiesRecord();
 
   const onPhotoCaptured = (
     image: ImagePickerResponse,
@@ -23,7 +28,7 @@ const AddPhotos: React.FC<Props> = ({route, navigation}) => {
   };
 
   const onPhotoCapturingError = (error: unknown) => {
-    console.log(error);
+    navigation.navigate('Error', {error});
   };
 
   const {capturePhoto} = useCapturePhoto({
@@ -43,6 +48,7 @@ const AddPhotos: React.FC<Props> = ({route, navigation}) => {
               {
                 text: 'OK',
                 onPress: () => {
+                  addActivity(route.params.activityId);
                   navigation.navigate('Home');
                 },
               },

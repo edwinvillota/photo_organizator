@@ -6,7 +6,7 @@ import {ValidateIdModal} from '../../components/molecules';
 import {styles} from './CreateActivity.styles';
 import {useSettings} from '../../context/SettingsProvider';
 import {isValidActivityId} from '../../utils';
-import {useRestoreActivityState} from '../../hooks';
+import {useRestoreActivityState, useCreateActivityFolder} from '../../hooks';
 import {PhotographState} from '../../models';
 
 const CreateActivity: React.FC<Props> = ({navigation}) => {
@@ -16,11 +16,27 @@ const CreateActivity: React.FC<Props> = ({navigation}) => {
   const [isOpenValidateModal, setIsOpenValidateModal] =
     useState<boolean>(false);
 
-  const onCreateActivity = (id: string) => {
-    navigation.navigate('AddPhotos', {activityId: id});
+  const onSuccess = () => {
+    navigation.navigate('AddPhotos', {activityId});
+  };
+
+  const onError = (path: string, error: unknown) => {
+    navigation.navigate('Error', {error});
+  };
+
+  const {createActivityFolder} = useCreateActivityFolder({
+    activityId,
+    onSuccess,
+    onError,
+  });
+
+  const onCreateActivity = () => {
+    setIsOpenValidateModal(false);
+    createActivityFolder();
   };
 
   const onEditActivity = (id: string, photoStates: PhotographState[]) => {
+    setIsOpenValidateModal(false);
     navigation.navigate('AddPhotos', {activityId: id, photoStates});
   };
 

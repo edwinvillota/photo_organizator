@@ -7,5 +7,5 @@ export const styles = StyleSheet.create({
     padding: 5,
   },
   keyWrapper: {flex: 1},
-  valueWrapper: {flex: 1},
+  valueWrapper: {flex: 1, alignItems: 'flex-end'},
 });

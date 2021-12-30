@@ -57,7 +57,7 @@ const useCapturePhoto = ({
           RNFS.mkdir(dateFolder);
         }
 
-        const newPhotoNewPath = `${dateFolder}/${activityId}_${photo.id}.jpg`;
+        const newPhotoNewPath = `${dateFolder}/${activityId}/${activityId}_${photo.id}.jpg`;
         const newPhotoExists = await RNFS.exists(newPhotoTempPath);
 
         if (newPhotoExists) {

@@ -1,35 +1,26 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {BasicLayout} from '../../layouts';
 import {SettingsEditor} from '../../components/organisms';
+import {Button} from '../../components/atoms';
 import {ScrollView} from 'react-native-gesture-handler';
-import {ExternalStorageDirectoryPath, mkdir} from 'react-native-fs';
-import {Text} from '../../components';
+import {useSettings} from '../../context/SettingsProvider';
+import {styles} from './Settings.style';
 
 const Settings: React.FC = () => {
-  const [result, setResult] = useState<string[]>([]);
-
-  useEffect(() => {
-    const readMainPath = async () => {
-      try {
-        console.log(ExternalStorageDirectoryPath);
-        const files = await mkdir(`${ExternalStorageDirectoryPath}/test`);
-      } catch (e) {
-        console.error('Error->', e);
-      }
-    };
-
-    readMainPath();
-  }, []);
+  const {refetchSettings} = useSettings();
 
   return (
-    <ScrollView>
-      <BasicLayout>
-        {result.map(item => (
-          <Text key={item}>{`-->${item}`}</Text>
-        ))}
+    <BasicLayout>
+      <ScrollView>
         <SettingsEditor />
-      </BasicLayout>
-    </ScrollView>
+      </ScrollView>
+      <Button
+        type="Primary"
+        onPress={() => refetchSettings()}
+        style={styles.button}>
+        Actualizar
+      </Button>
+    </BasicLayout>
   );
 };
 

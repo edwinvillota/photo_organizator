@@ -20,7 +20,6 @@ const useCreateMainFolder = (): UseCreateMainFolderReturn => {
       try {
         const existsFolder = await RNFS.exists(MAIN_FOLDER_PATH);
         if (!existsFolder) {
-          console.log('Creating folder');
           RNFS.mkdir(MAIN_FOLDER_PATH);
           setIsLoading(false);
         } else {

@@ -19,7 +19,7 @@ const Home: React.FC<Props> = ({navigation}) => {
         <View style={styles.button}>
           <Button
             type="Primary"
-            onPress={() => navigation.navigate('ListPhotos')}>
+            onPress={() => navigation.navigate('ActivitiesRecord')}>
             Actividades guardadas
           </Button>
         </View>

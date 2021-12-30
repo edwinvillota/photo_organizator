@@ -6,10 +6,11 @@ import {
 import {useDownloadSettings} from '../../hooks';
 
 export const SettingsProvider: React.FC = ({children}) => {
-  const {settings, isLoading, isError} = useDownloadSettings();
+  const {settings, isLoading, isError, refetchSettings} = useDownloadSettings();
 
   return (
-    <SettingsContext.Provider value={{settings, isLoading, isError}}>
+    <SettingsContext.Provider
+      value={{settings, isLoading, isError, refetchSettings}}>
       {children}
     </SettingsContext.Provider>
   );
